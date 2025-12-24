@@ -129,7 +129,7 @@ git --version
 cd C:\Projects
 
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/neurosan-studio.git
+git clone https://github.com/VickyVignesh2002/neurosan-studio.git
 cd neurosan-studio
 ```
 
@@ -238,7 +238,7 @@ python3 --version
 
 ```bash
 # Clone repository
-git clone https://github.com/YOUR_USERNAME/neurosan-studio.git
+git clone https://github.com/VickyVignesh2002/neurosan-studio.git
 cd neurosan-studio
 
 # Create virtual environment
@@ -650,7 +650,7 @@ sudo apt update
 sudo apt install python3.13 python3.13-venv python3.13-dev -y
 
 # Clone repository
-git clone https://github.com/YOUR_USERNAME/neurosan-studio.git
+git clone https://github.com/VickyVignesh2002/neurosan-studio.git
 cd neurosan-studio
 
 # Setup virtual environment
@@ -989,8 +989,8 @@ ss -tlnp | grep -E '8080|4173|11434|30011'
 
 ## Support
 
-- **Issues:** [GitHub Issues](https://github.com/YOUR_USERNAME/neurosan-studio/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/YOUR_USERNAME/neurosan-studio/discussions)
+- **Issues:** [GitHub Issues](https://github.com/VickyVignesh2002/neurosan-studio/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/VickyVignesh2002/neurosan-studio/discussions)
 - **Documentation:** See [docs/](docs/) folder
 
 ---
