@@ -418,6 +418,95 @@ ollama run mistral "Test GPU acceleration"
 
 ---
 
+## Ollama Cloud (No Local Installation Required)
+
+If you don't have Ollama installed locally or don't have a powerful GPU, you can use **Ollama Cloud** to run large models remotely.
+
+> ⚠️ **Note:** Ollama Cloud is currently in preview. See [docs.ollama.com/cloud](https://docs.ollama.com/cloud)
+
+### How Ollama Cloud Works
+
+| Feature | Local Ollama | Ollama Cloud |
+|---------|--------------|--------------|
+| Installation | Required locally | Not required |
+| GPU | Your hardware | Cloud GPU |
+| API Key | Not needed | Required |
+| Cost | Free | Pay per use |
+| Models | Any you download | Cloud models only |
+| Internet | Optional | Required |
+
+### Setting Up Ollama Cloud
+
+#### Step 1: Get Your API Key
+
+1. Go to [ollama.com](https://ollama.com) and sign in (or create account)
+2. Navigate to [ollama.com/settings/keys](https://ollama.com/settings/keys)
+3. Click "Create new key"
+4. Copy your API key
+
+#### Step 2: Configure Environment
+
+Edit your `.env` file:
+
+```env
+# Use Ollama Cloud instead of local
+LLM_PROVIDER=ollama_cloud
+
+# Your API key from https://ollama.com/settings/keys
+OLLAMA_API_KEY=your_api_key_here
+
+# Choose a cloud model (see available models below)
+OLLAMA_MODEL=gpt-oss:120b-cloud
+
+# Optional parameters
+OLLAMA_TEMPERATURE=0.7
+OLLAMA_TIMEOUT=300
+```
+
+#### Step 3: Available Cloud Models
+
+View all cloud models: [ollama.com/search?c=cloud](https://ollama.com/search?c=cloud)
+
+Popular cloud models:
+
+| Model | Size | Description |
+|-------|------|-------------|
+| `gpt-oss:120b-cloud` | 120B | Large general-purpose model |
+| `qwen3:32b-cloud` | 32B | Strong multilingual model |
+| `llama3.3:70b-cloud` | 70B | Meta's latest large model |
+| `deepseek-r1:70b-cloud` | 70B | Strong reasoning model |
+
+#### Step 4: Run NeuroSAN
+
+```bash
+# No need to start local Ollama!
+python run.py
+```
+
+### Cloud vs Local Decision Guide
+
+**Use Ollama Cloud when:**
+- ❌ No GPU or weak GPU
+- ❌ Limited disk space for models
+- ✅ Need large models (70B+)
+- ✅ Quick testing without setup
+
+**Use Local Ollama when:**
+- ✅ Have decent GPU (8GB+ VRAM)
+- ✅ Want free unlimited usage
+- ✅ Need offline capability
+- ✅ Privacy/security requirements
+
+### Important Notes
+
+1. **No Automatic Fallback:** If local Ollama isn't running, it will NOT automatically use cloud. You must explicitly set `LLM_PROVIDER=ollama_cloud`.
+
+2. **Model Names:** Cloud models typically have `-cloud` suffix but check the [model library](https://ollama.com/search?c=cloud) for exact names.
+
+3. **API Costs:** Ollama Cloud is a paid service. Check pricing at [ollama.com](https://ollama.com).
+
+---
+
 ## LLM Provider Configuration
 
 ### Using Ollama (FREE - No API Key Required)

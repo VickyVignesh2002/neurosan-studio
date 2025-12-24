@@ -21,13 +21,28 @@ from typing import Dict, Any
 class LLMConfig:
     """
     Utility class to get LLM configuration from environment variables.
-    Supports both Ollama and OpenAI models.
+    Supports Ollama (local), Ollama Cloud, OpenAI, and other providers.
+    
+    Ollama Cloud Usage:
+    - Set LLM_PROVIDER=ollama_cloud
+    - Set OLLAMA_API_KEY=your_api_key (get from https://ollama.com/settings/keys)
+    - Set OLLAMA_MODEL to a cloud model (e.g., gpt-oss:120b-cloud)
+    
+    See: https://docs.ollama.com/cloud
     """
+
+    # Ollama Cloud API endpoint
+    OLLAMA_CLOUD_URL = "https://ollama.com"
 
     @staticmethod
     def get_llm_config() -> Dict[str, Any]:
         """
         Get the appropriate LLM configuration based on environment variables.
+        
+        Supported LLM_PROVIDER values:
+        - "ollama" (default): Local Ollama server
+        - "ollama_cloud": Ollama Cloud API (requires OLLAMA_API_KEY)
+        - "openai": OpenAI API
         
         Returns:
             Dictionary with 'class' and 'model_name' (and potentially other config)
@@ -36,16 +51,19 @@ class LLMConfig:
         
         if llm_provider == "ollama":
             return LLMConfig.get_ollama_config()
+        elif llm_provider == "ollama_cloud":
+            return LLMConfig.get_ollama_cloud_config()
         elif llm_provider == "openai":
             return LLMConfig.get_openai_config()
         else:
-            # Default to Ollama
+            # Default to Ollama local
             return LLMConfig.get_ollama_config()
     
     @staticmethod
     def get_ollama_config() -> Dict[str, Any]:
         """
-        Get Ollama LLM configuration from environment variables.
+        Get LOCAL Ollama LLM configuration from environment variables.
+        Uses local Ollama server (default: http://localhost:11434)
         """
         config = {
             "class": "ollama",
@@ -66,6 +84,51 @@ class LLMConfig:
         timeout = os.getenv("OLLAMA_TIMEOUT")
         if timeout is not None:
             config["timeout"] = float(timeout)
+        
+        return config
+
+    @staticmethod
+    def get_ollama_cloud_config() -> Dict[str, Any]:
+        """
+        Get OLLAMA CLOUD configuration from environment variables.
+        
+        Requires:
+        - OLLAMA_API_KEY: Your API key from https://ollama.com/settings/keys
+        - OLLAMA_MODEL: Cloud model name (e.g., gpt-oss:120b-cloud, qwen3:32b-cloud)
+        
+        See available cloud models: https://ollama.com/search?c=cloud
+        Docs: https://docs.ollama.com/cloud
+        """
+        api_key = os.getenv("OLLAMA_API_KEY")
+        if not api_key:
+            raise ValueError(
+                "OLLAMA_API_KEY is required for Ollama Cloud. "
+                "Get your API key from: https://ollama.com/settings/keys"
+            )
+        
+        model = os.getenv("OLLAMA_MODEL", "gpt-oss:120b-cloud")
+        
+        # Ensure cloud models have -cloud suffix for clarity (optional)
+        # Cloud models typically have -cloud suffix but not always required
+        
+        config = {
+            "class": "ollama",
+            "model_name": model,
+            "base_url": LLMConfig.OLLAMA_CLOUD_URL,
+            "api_key": api_key,  # Ollama Cloud requires API key
+        }
+        
+        # Add optional parameters
+        temperature = os.getenv("OLLAMA_TEMPERATURE")
+        if temperature is not None:
+            config["temperature"] = float(temperature)
+        
+        top_p = os.getenv("OLLAMA_TOP_P")
+        if top_p is not None:
+            config["top_p"] = float(top_p)
+        
+        timeout = os.getenv("OLLAMA_TIMEOUT", "300")  # Cloud may need longer timeout
+        config["timeout"] = float(timeout)
         
         return config
     
