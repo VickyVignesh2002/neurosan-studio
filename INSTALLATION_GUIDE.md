@@ -497,9 +497,83 @@ python run.py
 - ✅ Need offline capability
 - ✅ Privacy/security requirements
 
+### Automatic Cloud Fallback (Recommended Setup)
+
+NeuroSAN now supports **automatic fallback** to Ollama Cloud when local Ollama is unavailable!
+
+#### How It Works
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Startup Flow                              │
+├─────────────────────────────────────────────────────────────┤
+│  1. Check: Is local Ollama running?                         │
+│     ├─ YES → Check: Is requested model available?           │
+│     │         ├─ YES → Use Local Ollama ✅                  │
+│     │         └─ NO  → Fallback to Cloud ☁️                 │
+│     └─ NO  → Fallback to Cloud ☁️                           │
+│                                                              │
+│  Fallback requires: OLLAMA_API_KEY is set                   │
+└─────────────────────────────────────────────────────────────┘
+```
+
+#### Enable Auto-Fallback
+
+Simply set your API key in `.env`:
+
+```env
+# Use local Ollama with automatic cloud fallback
+LLM_PROVIDER=ollama
+
+# Your local model preference
+OLLAMA_MODEL=mistral:7b-instruct
+
+# Enable auto-fallback (true by default)
+OLLAMA_AUTO_FALLBACK=true
+
+# API key for cloud fallback (get from https://ollama.com/settings/keys)
+OLLAMA_API_KEY=your_api_key_here
+```
+
+#### What Happens at Runtime
+
+**Scenario 1: Local Ollama Running + Model Available**
+```
+✅ Using local Ollama: mistral:7b-instruct
+```
+
+**Scenario 2: Local Ollama Not Running (but API key set)**
+```
+⚠️  Local Ollama not running at http://localhost:11434
+🌐 Automatically falling back to Ollama Cloud...
+☁️  Using Ollama Cloud: mistral:7b-instruct
+```
+
+**Scenario 3: Local Ollama Running but Model Missing (API key set)**
+```
+⚠️  Model 'llama3:70b' not found locally
+📋 Available models: mistral:7b-instruct, llama2, phi
+🌐 Automatically falling back to Ollama Cloud...
+☁️  Using Ollama Cloud: llama3:70b
+```
+
+**Scenario 4: No Local + No API Key**
+```
+⚠️  Warning: Local Ollama not running at http://localhost:11434
+💡 Tip: Set OLLAMA_API_KEY to enable automatic cloud fallback
+```
+
+#### Disable Auto-Fallback
+
+If you want to force local-only mode:
+
+```env
+OLLAMA_AUTO_FALLBACK=false
+```
+
 ### Important Notes
 
-1. **No Automatic Fallback:** If local Ollama isn't running, it will NOT automatically use cloud. You must explicitly set `LLM_PROVIDER=ollama_cloud`.
+1. **Auto-Fallback Enabled by Default:** If `OLLAMA_API_KEY` is set, the system will automatically fall back to cloud when local is unavailable.
 
 2. **Model Names:** Cloud models typically have `-cloud` suffix but check the [model library](https://ollama.com/search?c=cloud) for exact names.
 
