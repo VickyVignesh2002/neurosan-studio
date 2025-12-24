@@ -28,10 +28,9 @@ metadata {
     ]
 }
 
-llm_config {
-    class = "openai"
-    model_name = "gpt-4.1-mini"
-}
+include "registries/llm_config.hocon"
+
+llm_config = ${shared_llm_config}
 
 tools = [
     # This is the agent network's entry point.

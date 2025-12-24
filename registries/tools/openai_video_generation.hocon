@@ -23,9 +23,9 @@
 # See https://platform.openai.com/docs/guides/video-generation
 
 {
-    "llm_config": {
-        "model_name": "gpt-4o",
-    },
+    include "registries/llm_config.hocon"
+    
+    "llm_config": ${shared_llm_config},
 
     # Video generation can take longer than usual LLM responses. Hence, we set
     "max_execution_seconds": 600,

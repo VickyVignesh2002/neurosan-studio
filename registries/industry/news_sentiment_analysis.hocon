@@ -19,6 +19,7 @@
 
 {
     include "registries/aaosa.hocon"
+    include "registries/llm_config.hocon"
     
     "metadata": {
         "description": "Multi-agent system that analyzes news articles from The New York Times, The Guardian, and Al Jazeera to reveal how topics, events, or individuals are emotionally framed across diverse geopolitical perspectives. Uses keyword-driven VADER sentiment analysis to generate data-backed insights highlighting variations in tone, polarity, and narrative emphasis.",
@@ -29,9 +30,7 @@
             "Analyze the sentiment of election coverage across NYT, Guardian, and Al Jazeera.",
         ]
     },
-    "llm_config": {
-        "model_name": "gpt-4o",
-    },
+    "llm_config": ${shared_llm_config},
     "max_iterations": 40000,
     "max_execution_seconds": 6000,
     "instructions_prefix": """

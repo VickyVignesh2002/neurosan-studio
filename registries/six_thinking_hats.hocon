@@ -14,9 +14,9 @@
 #
 # END COPYRIGHT
 {
-    "llm_config": {
-        "model_name": "gpt-4o",
-    },
+    include "registries/llm_config.hocon"
+    
+    "llm_config": ${shared_llm_config},
     "tools": [
         # This first agent definition is regarded as the "Front Man", which
         # does all the talking to the outside world/client.

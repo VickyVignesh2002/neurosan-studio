@@ -16,6 +16,8 @@
 {
     include "registries/aaosa.hocon"
     
+    include "registries/llm_config.hocon"
+    
     "metadata": {
         "description": "Multi-agent system for analyzing agent interaction logs to validate quality, response time, cost efficiency, success rates, and responsible AI compliance. Called from log_analyzer app to review all agent interactions in log files and produce comprehensive validation reports. Evaluates agent behavior across multiple dimensions including quality standards, performance metrics, and ethical guidelines.",
         "tags": ["log_analysis",  "AAOSA"],
@@ -26,8 +28,7 @@
         ]
     },
     
-    "llm_config": {
-        "model_name": "gpt-4o",
+    "llm_config": ${shared_llm_config},
     },
     "instructions_prefix": """
     You are part of a agent_validation_network of assistants.

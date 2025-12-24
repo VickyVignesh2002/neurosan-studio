@@ -27,9 +27,8 @@
         ]
     }
    
-    "llm_config": {
-        "model_name": "gpt-4o"
-    },
+    include "registries/llm_config.hocon"
+    "llm_config": ${shared_llm_config},
     "max_iterations": 5000,
     "max_execution_seconds": 900,
     "instructions_prefix": """

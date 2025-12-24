@@ -24,9 +24,9 @@
 # Note: If `langchain-google-genai` is already installed in your environment, `google-genai` is already included.
 
 {
-    "llm_config": {
-        "model_name": "gpt-4o",
-    },
+    include "registries/llm_config.hocon"
+    
+    "llm_config": ${shared_llm_config},
 
     # Optional metadata describing this agent network
     "metadata": {

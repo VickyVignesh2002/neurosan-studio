@@ -36,9 +36,9 @@
         ]
     }
     
-    "llm_config": {
-        "model_name": "gpt-4o"
-    },
+    include "registries/llm_config.hocon"
+    
+    "llm_config": ${shared_llm_config},
     "instructions_prefix": """
     You are in charge of a portion of company's intranet. The intranet is also known as MyIntranet.
     Only answer inquiries that are directly within your area of expertise, from the company's perspective.

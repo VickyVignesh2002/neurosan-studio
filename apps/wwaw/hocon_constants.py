@@ -14,12 +14,15 @@
 #
 # END COPYRIGHT
 
+from llm_config import LLMConfig
+
+# Get LLM configuration from environment variables
+_llm_config = LLMConfig.get_llm_config()
+_llm_config_hocon = LLMConfig.to_hocon_config(_llm_config)
+
 HOCON_HEADER_START = (
     "{\n"
-    '    "llm_config": {\n'
-    '        "class": "openai",\n'
-    '        "use_model_name": "gpt-4.1-2025-04-14",\n'
-    "    },\n"
+    + _llm_config_hocon + "\n"
     '"max_iterations": 40000,\n'
     '"max_execution_seconds": 6000,\n'
     '    "commondefs": {\n'

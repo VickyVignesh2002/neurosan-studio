@@ -14,6 +14,8 @@
 #
 # END COPYRIGHT
 {
+    include "registries/llm_config.hocon"
+    
     # Optional metadata describing this agent network
     "metadata": {
         "description": "Agent network with a single agent, used as a 'Hello world!' example, that can answer questions about music and follow up."
@@ -24,9 +26,7 @@
         ]
     }
 
-    "llm_config": {
-        "model_name": "gpt-4o",
-    },
+    "llm_config": ${shared_llm_config},
     "tools": [
         # This first agent definition is regarded as the "Front Man", which
         # does all the talking to the outside world/client.

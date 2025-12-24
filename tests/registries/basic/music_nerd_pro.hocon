@@ -19,14 +19,14 @@
 # https://github.com/cognizant-ai-lab/neuro-san/blob/main/docs/agent_hocon_reference.md
 
 {
+    include "registries/llm_config.hocon"
+    
     # Optional metadata describing this agent network
     "metadata": {
         "description": "Simple agent network using a single OpenAI-based agent and a single CodedTool",
         "tags": ["example"],
     },
-    "llm_config": {
-        "model_name": "gpt-4o",
-    },
+    "llm_config": ${shared_llm_config},
     "tools": [
         # This first agent definition is regarded as the "Front Man", which
         # does all the talking to the outside world/client.

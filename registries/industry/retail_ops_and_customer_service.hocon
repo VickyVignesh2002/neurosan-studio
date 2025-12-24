@@ -26,8 +26,8 @@
         ]
     },
 
-    "llm_config": {
-        "model_name": "gpt-4o",
+    include "registries/llm_config.hocon"
+    "llm_config": ${shared_llm_config},
     },
     "demo_mode": """
     You are part of a demo system, so when queried, make up a realistic response as 

@@ -15,6 +15,7 @@
 # END COPYRIGHT
 {
     include "registries/aaosa.hocon"
+    include "registries/llm_config.hocon"
 
  
     "metadata": {
@@ -26,9 +27,7 @@
         ]
     }
 
-    "llm_config": {
-        "model_name": "gpt-4o",
-    },
+    "llm_config": ${shared_llm_config},
 
     "tools": [
         # This first agent definition is regarded as the "Front Man", which

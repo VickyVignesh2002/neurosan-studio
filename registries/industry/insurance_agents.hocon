@@ -15,6 +15,7 @@
 # END COPYRIGHT
 {
     include "registries/aaosa.hocon"
+    include "registries/llm_config.hocon"
     
     "metadata": {
         "description": "Modular multi-agent framework designed to automate underwriting and claims workflows for insurance operations. Replicates real-world insurance operations desk functions, coordinating across multiple teams including ACORD form validation, risk assessment, underwriting decision generation, and claims intake. Currently runs in demo mode.",
@@ -26,9 +27,7 @@
         ]
     },
     
-    "llm_config": {
-        "model_name": "gpt-4o",
-    },
+    "llm_config": ${shared_llm_config},
 
     "tools": [
         # This first agent definition is regarded as the "Front Man", which

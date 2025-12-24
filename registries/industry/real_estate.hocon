@@ -15,6 +15,7 @@
 # END COPYRIGHT
 {
     include "registries/aaosa.hocon"
+    include "registries/llm_config.hocon"
 
     "metadata": {
         "description": "Multi-agent system that provides help with real estate transaction inquiries. The top-level agent receives a question and, in coordination with down-chain agents, provides an answer. Includes Buyer, Seller, and Listing agents that form a tree-shaped network multiple layers deep. Some agents call coded tools such as the Brave search API for property listings and inspections.",
@@ -26,9 +27,7 @@
         ]
     }
 
-    "llm_config": {
-        "model_name": "gpt-4o"
-    },
+    "llm_config": ${shared_llm_config},
     "instructions_prefix": """
 You are in charge of a portion of company's realestate consulting services. The company is known as RealEstate.ai.
 Only answer inquiries that are directly within your area of expertise, from the company's perspective.

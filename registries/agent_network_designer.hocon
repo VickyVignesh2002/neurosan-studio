@@ -14,6 +14,8 @@
 #
 # END COPYRIGHT
 {
+    include "registries/llm_config.hocon"
+    
     "metadata": {
         "description": "Multi-agent system designed to create or modify other multi-agent systems. Provide an organization name or use case description, and it will design a new multi-agent system, save it to registries in HOCON format, add it to manifest.hocon, and generate example usage queries. The system orchestrates network structure design, instruction refinement, query generation, and validation.",
         "tags": ["experimental", "tool"],
@@ -24,9 +26,7 @@
         ]
     },
     
-    "llm_config": {
-        "model_name": "gpt-4o",
-    },
+    "llm_config": ${shared_llm_config_advanced},
     "max_iterations": 40000,
     "max_execution_seconds": 6000,
     "tools": [
